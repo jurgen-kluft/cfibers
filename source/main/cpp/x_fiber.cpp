@@ -99,6 +99,6 @@ FIBER_PROC(load_map)
 
     // This call will post the IO request and switch to another fiber, when the IO request
     // has finished (or failed), the processing will come back here.
-    // When passing NULL for the buffer it will be allocated by the IO thread.
-    read_file_async("main.map", NULL, 0, 0, xfibers::PRIORITY_HIGH, process_mapdata);
+    // When passing nullptr for the buffer it will be allocated by the IO thread.
+    read_file_async("main.map", nullptr, 0, 0, xfibers::PRIORITY_HIGH, process_mapdata);
 }

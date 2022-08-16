@@ -7,12 +7,12 @@
 UNITTEST_SUITE_LIST(xFibersUnitTest);
 UNITTEST_SUITE_DECLARE(xFibersUnitTest, fibers);
 
-namespace xcore
+namespace ncore
 {
 	class TestHeapAllocator : public alloc_t
 	{
 	public:
-							TestHeapAllocator(xcore::alloc_t* allocator) : mAllocator(allocator) { 		}
+							TestHeapAllocator(ncore::alloc_t* allocator) : mAllocator(allocator) { 		}
 
 		virtual void*		v_allocate(u32 size, u32 alignment)
 		{
@@ -28,41 +28,41 @@ namespace xcore
 
 		virtual void		v_release()		{ }
 	private:
-		xcore::alloc_t*	mAllocator;
+		ncore::alloc_t*	mAllocator;
 	};
 }
 
 class UnitTestAllocator : public UnitTest::Allocator
 {
 public:
-					UnitTestAllocator(xcore::alloc_t* allocator) : mAllocator(allocator) {}
-	virtual void*	Allocate(size_t size)		{ return mAllocator->allocate((xcore::u32)size, 4);}
+					UnitTestAllocator(ncore::alloc_t* allocator) : mAllocator(allocator) {}
+	virtual void*	Allocate(size_t size)		{ return mAllocator->allocate((ncore::u32)size, 4);}
 	virtual size_t	Deallocate(void* ptr)		{ return mAllocator->deallocate(ptr); }
 private:
-	xcore::alloc_t*	mAllocator;
+	ncore::alloc_t*	mAllocator;
 };
 
-xcore::alloc_t* gSystemAllocator = NULL;
-xcore::alloc_t* gAtomicAllocator = NULL;
+ncore::alloc_t* gSystemAllocator = nullptr;
+ncore::alloc_t* gAtomicAllocator = nullptr;
 
 bool gRunUnitTest(UnitTest::TestReporter& reporter)
 {
-	gSystemAllocator = xcore::alloc_t::get_system();
+	gSystemAllocator = ncore::alloc_t::get_system();
 	UnitTestAllocator unittestAllocator( gSystemAllocator );
 	UnitTest::SetAllocator(&unittestAllocator);
 
-	xcore::TestHeapAllocator threadHeapAllocator(gSystemAllocator);
+	ncore::TestHeapAllocator threadHeapAllocator(gSystemAllocator);
 	gAtomicAllocator = &threadHeapAllocator;
 	
-	xcore::atomic::x_Init(gAtomicAllocator);
+	ncore::atomic::x_Init(gAtomicAllocator);
 	int r = UNITTEST_SUITE_RUN(reporter, xFibersUnitTest);
-	xcore::atomic::x_Exit();
+	ncore::atomic::x_Exit();
 
-	gAtomicAllocator = NULL;
+	gAtomicAllocator = nullptr;
 
-	UnitTest::SetAllocator(NULL);
+	UnitTest::SetAllocator(nullptr);
 	gSystemAllocator->release();
-	gSystemAllocator = NULL;
+	gSystemAllocator = nullptr;
 
 	return r==0;
 }
