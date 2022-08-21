@@ -1,31 +1,31 @@
-package xfibers
+package cfibers
 
 import (
-	xbase "github.com/jurgen-kluft/xbase/package"
+	cbase "github.com/jurgen-kluft/cbase/package"
+	centry "github.com/jurgen-kluft/centry/package"
+	cunittest "github.com/jurgen-kluft/cunittest/package"
 	"github.com/jurgen-kluft/xcode/denv"
-	xentry "github.com/jurgen-kluft/xentry/package"
-	xunittest "github.com/jurgen-kluft/xunittest/package"
 )
 
-// GetPackage returns the package object of 'xfibers'
+// GetPackage returns the package object of 'cfibers'
 func GetPackage() *denv.Package {
 	// Dependencies
-	unittestpkg := xunittest.GetPackage()
-	entrypkg := xentry.GetPackage()
-	basepkg := xbase.GetPackage()
+	unittestpkg := cunittest.GetPackage()
+	entrypkg := centry.GetPackage()
+	basepkg := cbase.GetPackage()
 
-	// The main (xfibers) package
-	mainpkg := denv.NewPackage("xfibers")
+	// The main (cfibers) package
+	mainpkg := denv.NewPackage("cfibers")
 	mainpkg.AddPackage(unittestpkg)
 	mainpkg.AddPackage(entrypkg)
 	mainpkg.AddPackage(basepkg)
 
-	// 'xfibers' library
-	mainlib := denv.SetupDefaultCppLibProject("xfibers", "github.com\\jurgen-kluft\\xfibers")
+	// 'cfibers' library
+	mainlib := denv.SetupDefaultCppLibProject("cfibers", "github.com\\jurgen-kluft\\cfibers")
 	mainlib.Dependencies = append(mainlib.Dependencies, basepkg.GetMainLib())
 
-	// 'xfibers' unittest project
-	maintest := denv.SetupDefaultCppTestProject("xfibers_test", "github.com\\jurgen-kluft\\xfibers")
+	// 'cfibers' unittest project
+	maintest := denv.SetupDefaultCppTestProject("cfibers_test", "github.com\\jurgen-kluft\\cfibers")
 	maintest.Dependencies = append(maintest.Dependencies, unittestpkg.GetMainLib())
 	maintest.Dependencies = append(maintest.Dependencies, entrypkg.GetMainLib())
 	maintest.Dependencies = append(maintest.Dependencies, basepkg.GetMainLib())
