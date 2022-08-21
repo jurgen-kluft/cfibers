@@ -1,4 +1,4 @@
-namespace xfibers
+namespace nfiber
 {
     typedef void (*ffunc_t)(void*);
 

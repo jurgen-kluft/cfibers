@@ -2,9 +2,9 @@ package cfibers
 
 import (
 	cbase "github.com/jurgen-kluft/cbase/package"
+	"github.com/jurgen-kluft/ccode/denv"
 	centry "github.com/jurgen-kluft/centry/package"
 	cunittest "github.com/jurgen-kluft/cunittest/package"
-	"github.com/jurgen-kluft/xcode/denv"
 )
 
 // GetPackage returns the package object of 'cfibers'
