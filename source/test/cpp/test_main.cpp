@@ -1,6 +1,6 @@
-#include "cbase/c_target.h"
-#include "cbase/c_allocator.h"
-#include "cbase/c_base.h"
+#include "ccore/c_target.h"
+#include "ccore/c_allocator.h"
+#include "ccore/c_target.h"
 #include "cbase/c_console.h"
 
 #include "cunittest/cunittest.h"
