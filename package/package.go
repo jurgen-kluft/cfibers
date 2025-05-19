@@ -18,13 +18,13 @@ func GetPackage() *denv.Package {
 	mainpkg.AddPackage(basepkg)
 
 	// 'cfibers' library
-	mainlib := denv.SetupDefaultCppLibProject("cfibers", "github.com\\jurgen-kluft\\cfibers")
-	mainlib.Dependencies = append(mainlib.Dependencies, basepkg.GetMainLib())
+	mainlib := denv.SetupCppLibProject("cfibers", "github.com\\jurgen-kluft\\cfibers")
+	mainlib.AddDependencies(basepkg.GetMainLib()...)
 
 	// 'cfibers' unittest project
 	maintest := denv.SetupDefaultCppTestProject("cfibers_test", "github.com\\jurgen-kluft\\cfibers")
-	maintest.Dependencies = append(maintest.Dependencies, unittestpkg.GetMainLib())
-	maintest.Dependencies = append(maintest.Dependencies, basepkg.GetMainLib())
+	maintest.AddDependencies(unittestpkg.GetMainLib()...)
+	maintest.AddDependencies(basepkg.GetMainLib()...)
 	maintest.Dependencies = append(maintest.Dependencies, mainlib)
 
 	mainpkg.AddMainLib(mainlib)
